@@ -58,14 +58,14 @@ func main() {
 			req.Header.Set("X-Forwarded-For", ip)
 		}
 	}
-
+    port := os.Getenv("PORT")
 	server := &http.Server{
-		Addr: ":3000",
+		Addr: ":"+port,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			proxy.ServeHTTP(w, r)
 		}),
 	}
 
-	log.Println("Proxy running on :3000")
+	log.Println("Proxy running on :"+port)
 	log.Fatal(server.ListenAndServe())
 }
